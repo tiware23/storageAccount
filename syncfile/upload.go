@@ -11,20 +11,20 @@ import (
 )
 
 type AssetFile struct {
-	ContentType, ContainerName, AccountName, AccountKey string
+	ContentType, ContainerName, AccountName, accountKey string
 }
 
 func (a *AssetFile) SetAccountVars() (string, string) {
-	a.AccountName, a.AccountKey = os.Getenv("AZURE_STORAGE_ACCOUNT"), os.Getenv("AZURE_STORAGE_ACCESS_KEY")
+	a.AccountName, a.accountKey = os.Getenv("AZURE_STORAGE_ACCOUNT"), os.Getenv("AZURE_STORAGE_ACCESS_KEY")
 
-	if len(a.AccountName) == 0 || len(a.AccountKey) == 0 {
+	if len(a.AccountName) == 0 || len(a.accountKey) == 0 {
 		log.Fatal("Either the AZURE_STORAGE_ACCOUNT or AZURE_STORAGE_ACCESS_KEY environment variable is not set")
 	}
-	return a.AccountName, a.AccountKey
+	return a.AccountName, a.accountKey
 }
 
 func (a *AssetFile) GetCrendials() *azblob.SharedKeyCredential {
-	credential, err := azblob.NewSharedKeyCredential(a.AccountName, a.AccountKey)
+	credential, err := azblob.NewSharedKeyCredential(a.AccountName, a.accountKey)
 	if err != nil {
 		log.Fatal("Invalid credentials with error: " + err.Error())
 	}
